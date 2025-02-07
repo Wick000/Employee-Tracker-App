@@ -7,7 +7,7 @@ CREATE DATABASE emtracker_db;
 
 CREATE TABLE departments (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(30) UNIQUE NOT NULL  -- Holds department name
+    name VARCHAR(30) UNIQUE NOT NULL  
 );
 
 CREATE TABLE role (
