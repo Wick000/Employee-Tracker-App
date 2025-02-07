@@ -1,26 +1,29 @@
 \c postgres
 
-DROP DATABASE IF EXISTS emtracker;
-CREATE DATABASE emtracker;
+DROP DATABASE IF EXISTS emtracker_db;
+CREATE DATABASE emtracker_db;
 
-\c emtracker;
+\c emtracker_db;
 
 CREATE TABLE departments (
-    id: SERIAL PRIMARY KEY,
-    name: VARCHAR(30) UNIQUE NOT NULL   /*to hold department name*/
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(30) UNIQUE NOT NULL  -- Holds department name
 );
 
 CREATE TABLE role (
-    id: SERIAL PRIMARY KEY,
-    title: VARCHAR(30) UNIQUE NOT NULL,
-    salary: DECIMAL NOT NULL,
-    department_id: INTEGER NOT NULL
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(30) UNIQUE NOT NULL,
+    salary DECIMAL NOT NULL,
+    department_id INTEGER NOT NULL,
+    CONSTRAINT fk_department FOREIGN KEY (department_id) REFERENCES departments(id) ON DELETE SET NULL
 );
 
-CREATE TABLE employee(
-    id: SERIAL PRIMARY KEY,
-    first_name: VARCHAR(30) NOT NULL,
-    last_name: VARCHAR(30) NOT NULL,
-    role_id: INTEGER NOT NULL,
-    manager_id: INTEGER
+CREATE TABLE employee (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    role_id INTEGER NOT NULL,
+    manager_id INTEGER,
+    CONSTRAINT fk_role FOREIGN KEY (role_id) REFERENCES role(id) ON DELETE CASCADE,
+    CONSTRAINT fk_manager FOREIGN KEY (manager_id) REFERENCES employee(id) ON DELETE SET NULL
 );
