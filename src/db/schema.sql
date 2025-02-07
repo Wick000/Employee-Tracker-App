@@ -1,4 +1,4 @@
-\c postgres
+ \c postgres
 
 DROP DATABASE IF EXISTS emtracker_db;
 CREATE DATABASE emtracker_db;

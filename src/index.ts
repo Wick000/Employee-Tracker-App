@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import { pool } from './connection.js';
+import { pool } from './db/connection.js';
 
 async function mainMenu() {
     const answers = await inquirer.prompt([
@@ -66,7 +66,7 @@ async function viewEmployees() {
     console.table(result.rows);
 }
 
-// Function to Add an Employee
+
 async function addEmployee() {
     const roles = await pool.query('SELECT id, title FROM role');
     const employees = await pool.query('SELECT id, first_name, last_name FROM employee');
@@ -97,7 +97,7 @@ async function addEmployee() {
     console.log('Employee added successfully.');
 }
 
-// Function to Update an Employee's Role
+
 async function updateEmployeeRole() {
     const employees = await pool.query('SELECT id, first_name, last_name FROM employee');
     const roles = await pool.query('SELECT id, title FROM role');
@@ -126,7 +126,7 @@ async function updateEmployeeRole() {
     console.log('Employee role updated successfully.');
 }
 
-// Function to View Roles
+
 async function viewRoles() {
     const result = await pool.query(`
         SELECT role.id, role.title, role.salary, departments.name AS department 
@@ -136,7 +136,7 @@ async function viewRoles() {
     console.table(result.rows);
 }
 
-// Function to Add a Role
+
 async function addRole() {
     const departments = await pool.query('SELECT id, name FROM departments');
 
@@ -157,13 +157,13 @@ async function addRole() {
     console.log('Role added successfully.');
 }
 
-// Function to View Departments
+
 async function viewDepartments() {
     const result = await pool.query('SELECT * FROM departments');
     console.table(result.rows);
 }
 
-// Function to Add a Department
+
 async function addDepartment() {
     const answers = await inquirer.prompt([
         { type: 'input', name: 'name', message: "Enter the department name:" }
@@ -174,5 +174,5 @@ async function addDepartment() {
     console.log('Department added successfully.');
 }
 
-// Start the CLI
+
 mainMenu();
